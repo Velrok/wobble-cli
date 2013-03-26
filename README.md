@@ -1,4 +1,4 @@
-wobble-cli
-==========
+# wobble-cli
+
 
 A command line wobble client.
