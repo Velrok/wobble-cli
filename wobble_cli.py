@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """Wobble client.
 
 Set the following environment variables:
