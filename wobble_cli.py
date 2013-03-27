@@ -14,6 +14,9 @@ Options:
 from __future__ import with_statement
 from docopt import docopt
 from os import environ
+import datetime
+from bs4 import BeautifulSoup
+import logging
 
 import sys
 # add wobble lib
@@ -39,9 +42,18 @@ def archive_topics(days):
 
     with wobble_service.connect(environ['WOBBLE_USERNAME'],
                                 environ['WOBBLE_PASSWORD']) as service:
+        today = datetime.date.today()
+        threashhold = today - datetime.timedelta(days=int(days))
+
         topics = service.topics_list()
         for topic in topics['topics']:
-            print topic['max_last_touch']
+            last_touch = datetime.datetime.fromtimestamp(topic['max_last_touch'])
+            last_touch = last_touch.date()
+            if last_touch < threashhold:
+                abstract = BeautifulSoup(topic['abstract']).get_text()
+                service.archive_topic(topic['id'])
+                logging.info("{}\tid:{}\t-> archived".format(
+                                abstract, topic['id']))
 
 
 if __name__ == '__main__':
