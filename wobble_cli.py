@@ -6,10 +6,10 @@ WOBBLE_USERNAME
 WOBBLE_PASSWORD
 
 Usage:
-    wobble archive [--days-inactive=<days> | -i <days>]
+    wobble archive [-i <days>]
 
 Options:
-    -i --days-inactive [default: 14]
+    -i --days-inactive=<days>   [default: 14]
 """
 from __future__ import with_statement
 from docopt import docopt
